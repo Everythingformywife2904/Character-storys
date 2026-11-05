@@ -1,9 +1,1000 @@
 <!DOCTYPE html>
-<html lang=„de“>
+
+<html lang="de">
+
 <head>
-    <title>Character Stories</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#171421">
+
+<title>Character Stories</title>
+
+<style>
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+body {
+
+    margin: 0;
+
+    background: #171421;
+
+    color: #f4efff;
+
+    font-family: Arial, sans-serif;
+
+}
+
+header {
+
+    text-align: center;
+
+    padding: 30px 15px;
+
+    background: #211b31;
+
+    border-bottom: 1px solid #49395e;
+
+}
+
+header h1 {
+
+    color: #d5adff;
+
+    font-size: 30px;
+
+    margin: 0 0 8px;
+
+}
+
+header p {
+
+    color: #b9adc9;
+
+}
+
+nav {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 15px;
+
+    flex-wrap: wrap;
+
+}
+
+button {
+
+    background: #9b6bd1;
+
+    border: none;
+
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+}
+
+button:hover {
+
+    background: #b487e9;
+
+}
+
+button.secondary {
+
+    background: #393047;
+
+}
+
+main {
+
+    max-width: 750px;
+
+    margin: auto;
+
+    padding: 15px;
+
+}
+
+.card {
+
+    background: #241e32;
+
+    border: 1px solid #49395e;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    margin-bottom: 18px;
+
+}
+
+h2 {
+
+    color: #d5adff;
+
+}
+
+h3 {
+
+    color: #d5adff;
+
+}
+
+.story {
+
+    line-height: 1.8;
+
+    white-space: pre-line;
+
+    color: #e5dcec;
+
+}
+
+label {
+
+    display: block;
+
+    margin: 15px 0 7px;
+
+    color: #d5adff;
+
+}
+
+input, select, textarea {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 9px;
+
+    border: 1px solid #57466d;
+
+    background: #171421;
+
+    color: white;
+
+    font-size: 15px;
+
+}
+
+textarea {
+
+    min-height: 90px;
+
+    resize: vertical;
+
+}
+
+.hidden {
+
+    display: none;
+
+}
+
+.character {
+
+    padding: 15px;
+
+    background: #302740;
+
+    border-radius: 12px;
+
+    margin-top: 12px;
+
+}
+
+.character p {
+
+    color: #c9bdd7;
+
+    line-height: 1.5;
+
+}
+
+.small {
+
+    font-size: 12px;
+
+    color: #a99bb9;
+
+}
+
+footer {
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: #81758e;
+
+}
+
+</style>
+
 </head>
+
 <body>
-    <h1>Willkommen bei Character Stories!</h1>
+
+<header>
+
+    <h1>✦ Character Stories ✦</h1>
+
+    <p>Jede Person hat eine Geschichte. Entdecke sie.</p>
+
+</header>
+
+<nav>
+
+    <button onclick="showPage('home')">Neuer Charakter</button>
+
+    <button class="secondary" onclick="showPage('collection')">Meine Sammlung</button>
+
+</nav>
+
+<main>
+
+<section id="home">
+
+    <div class="card" id="intro">
+
+        <h2>Eine neue Geschichte wartet ...</h2>
+
+        <p>
+
+            Du kennst diese Person noch nicht.
+
+            Du weißt nicht, wie sie aussieht.
+
+            Du kennst nur ihre Geschichte.
+
+        </p>
+
+        <p>
+
+            Lies aufmerksam und entscheide anschließend selbst,
+
+            wie diese Person aussehen soll.
+
+        </p>
+
+        <button onclick="generateCharacter()">
+
+            Neuen Charakter entdecken
+
+        </button>
+
+    </div>
+
+    <div class="card hidden" id="storyBox">
+
+        <p class="small">EINE UNBEKANNTE PERSON</p>
+
+        <h2 id="storyTitle"></h2>
+
+        <div class="story" id="storyText"></div>
+
+        <br>
+
+        <button onclick="showEditor()">Person gestalten</button>
+
+        <button class="secondary" onclick="generateCharacter()">Andere Geschichte</button>
+
+    </div>
+
+    <div class="card hidden" id="editor">
+
+        <h2>Wie sieht diese Person aus?</h2>
+
+        <p>
+
+            Du kennst jetzt ihre Vergangenheit.
+
+            Gestalte ihr Aussehen so, wie du es dir vorstellst.
+
+        </p>
+
+        <label>Name des Charakters</label>
+
+        <input id="name" placeholder="Name eingeben">
+
+        <label>Alter</label>
+
+        <input id="age" type="number" min="1" max="120" placeholder="Alter">
+
+        <label>Geschlecht</label>
+
+        <select id="gender">
+
+            <option>Divers</option>
+
+            <option>Weiblich</option>
+
+            <option>Männlich</option>
+
+            <option>Keine Angabe</option>
+
+        </select>
+
+        <label>Haarfarbe</label>
+
+        <select id="hair">
+
+            <option>Schwarz</option>
+
+            <option>Blond</option>
+
+            <option>Braun</option>
+
+            <option>Rot</option>
+
+            <option>Weiß</option>
+
+            <option>Bunt</option>
+
+            <option>Andere</option>
+
+        </select>
+
+        <label>Augenfarbe</label>
+
+        <select id="eyes">
+
+            <option>Braun</option>
+
+            <option>Blau</option>
+
+            <option>Grün</option>
+
+            <option>Grau</option>
+
+            <option>Haselnussbraun</option>
+
+            <option>Andere</option>
+
+        </select>
+
+        <label>Frisur</label>
+
+        <input id="hairstyle" placeholder="Zum Beispiel lange Locken">
+
+        <label>Kleidung</label>
+
+        <input id="clothes" placeholder="Wie kleidet sich die Person?">
+
+        <label>Besondere Merkmale</label>
+
+        <textarea id="features" placeholder="Zum Beispiel Narben, Tattoos, Schmuck ..."></textarea>
+
+        <label>Eigene Beschreibung</label>
+
+        <textarea id="description" placeholder="Wie stellst du dir die Person vor?"></textarea>
+
+        <button onclick="saveCharacter()">Charakter fertigstellen</button>
+
+    </div>
+
+    <div class="card hidden" id="finished">
+
+        <h2>Charakter fertiggestellt!</h2>
+
+        <div id="finishedContent"></div>
+
+        <button onclick="generateCharacter()">Nächsten Charakter entdecken</button>
+
+        <button class="secondary" onclick="showPage('collection')">Zur Sammlung</button>
+
+    </div>
+
+</section>
+
+<section id="collection" class="hidden">
+
+    <div class="card">
+
+        <h2>Meine Charaktere</h2>
+
+        <p>Alle Charaktere, die du fertiggestellt hast.</p>
+
+        <h3 id="count">0 Charaktere</h3>
+
+        <div id="characterList"></div>
+
+        <br>
+
+        <button onclick="exportCharacters()">Sammlung exportieren</button>
+
+        <button class="secondary" onclick="document.getElementById('importFile').click()">Sammlung importieren</button>
+
+        <input type="file" id="importFile" accept=".json" hidden onchange="importCharacters(event)">
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+
+    Character Stories · Deine Fantasie, deine Geschichten.
+
+</footer>
+
+<script>
+
+let currentCharacter = null;
+
+const savedCharacters = () => {
+
+    return JSON.parse(localStorage.getItem("characterStories") || "[]");
+
+};
+
+function random(array) {
+
+    return array[Math.floor(Math.random() * array.length)];
+
+}
+
+const stories = [
+
+{
+
+    title: "Ein Leben voller Veränderungen",
+
+    parts: [
+
+        "Diese Person wuchs in einer kleinen Stadt auf. Ihre Kindheit war von vielen Veränderungen geprägt.",
+
+        "Schon früh musste sie lernen, selbstständig zu sein. Menschen kamen und gingen aus ihrem Leben, aber einige Erinnerungen blieben für immer.",
+
+        "Jahre später erhielt sie eine Nachricht, die alles verändern sollte. Eine Person aus ihrer Vergangenheit wollte wieder Kontakt aufnehmen.",
+
+        "Jetzt steht sie vor einer Entscheidung: Soll sie die Vergangenheit hinter sich lassen oder herausfinden, was damals wirklich passiert ist?"
+
+    ]
+
+},
+
+{
+
+    title: "Das vergessene Versprechen",
+
+    parts: [
+
+        "Als Kind verbrachte diese Person viel Zeit mit einem ganz besonderen Menschen.",
+
+        "Gemeinsam machten sie ein Versprechen: Egal, was passiert, sie würden sich eines Tages wiederfinden.",
+
+        "Doch das Leben hatte andere Pläne. Die Wege trennten sich und der Kontakt ging verloren.",
+
+        "Viele Jahre später taucht plötzlich ein Hinweis auf. Vielleicht ist das alte Versprechen doch noch nicht vergessen."
+
+    ]
+
+},
+
+{
+
+    title: "Zwischen zwei Welten",
+
+    parts: [
+
+        "Diese Person lebte lange Zeit an einem Ort, an dem sie sich nie wirklich zugehörig fühlte.",
+
+        "Ihre Interessen und Träume unterschieden sich stark von denen ihrer Umgebung.",
+
+        "Eines Tages ergab sich die Möglichkeit, ein komplett neues Leben anzufangen.",
+
+        "Doch dafür müsste sie alles zurücklassen, was sie bisher kannte. Ist ein Neuanfang wirklich das Richtige?"
+
+    ]
+
+},
+
+{
+
+    title: "Das Geheimnis der Familie",
+
+    parts: [
+
+        "Die Familie dieser Person schien nach außen hin vollkommen gewöhnlich.",
+
+        "Doch seit ihrer Kindheit gab es Fragen, auf die niemand eine Antwort geben wollte.",
+
+        "Beim Aufräumen eines alten Hauses findet sie Dokumente, die eine unbekannte Seite ihrer Familiengeschichte offenbaren.",
+
+        "Je mehr sie herausfindet, desto deutlicher wird, dass ihre Vergangenheit anders war, als sie immer geglaubt hatte."
+
+    ]
+
+},
+
+{
+
+    title: "Ein unerwarteter Neuanfang",
+
+    parts: [
+
+        "Nach einer schwierigen Zeit beschloss diese Person, ihr Leben komplett zu verändern.",
+
+        "Sie begann an einem neuen Ort, lernte unbekannte Menschen kennen und versuchte, alte Gewohnheiten hinter sich zu lassen.",
+
+        "Dabei begegnete sie jemandem, der ihre Sicht auf viele Dinge veränderte.",
+
+        "Zum ersten Mal seit langer Zeit scheint die Zukunft wieder voller Möglichkeiten zu sein."
+
+    ]
+
+},
+
+{
+
+    title: "Die letzte Erinnerung",
+
+    parts: [
+
+        "Diese Person besitzt einen Gegenstand, den sie seit ihrer Kindheit aufbewahrt.",
+
+        "Niemand weiß, warum dieser Gegenstand so wichtig ist.",
+
+        "Eines Tages entdeckt sie darin eine versteckte Nachricht, die mit einem längst vergangenen Ereignis zusammenhängt.",
+
+        "Die Suche nach der Wahrheit führt sie an Orte, die sie eigentlich nie wieder besuchen wollte."
+
+    ]
+
+},
+
+{
+
+    title: "Ein unbekannter Weg",
+
+    parts: [
+
+        "Diese Person hatte schon immer große Träume, aber nie den Mut, sie wirklich zu verfolgen.",
+
+        "Sie verbrachte Jahre damit, die Erwartungen anderer Menschen zu erfüllen.",
+
+        "Dann ergab sich eine Gelegenheit, die alles verändern könnte.",
+
+        "Zum ersten Mal muss sie entscheiden, ob sie das Leben führen möchte, das andere für sie vorgesehen haben, oder ihr eigenes."
+
+    ]
+
+}
+
+];
+
+const genres = [
+
+    "Fantasy",
+
+    "Gegenwart",
+
+    "Mystery",
+
+    "Mittelalter",
+
+    "Science-Fiction",
+
+    "Historisch",
+
+    "Abenteuer"
+
+];
+
+function generateCharacter() {
+
+    currentCharacter = {
+
+        id: Date.now() + Math.random(),
+
+        story: random(stories),
+
+        genre: random(genres),
+
+        date: new Date().toLocaleDateString("de-DE")
+
+    };
+
+    document.getElementById("intro").classList.add("hidden");
+
+    document.getElementById("editor").classList.add("hidden");
+
+    document.getElementById("finished").classList.add("hidden");
+
+    document.getElementById("storyBox").classList.remove("hidden");
+
+    document.getElementById("storyTitle").textContent =
+
+        currentCharacter.story.title;
+
+    document.getElementById("storyText").textContent =
+
+        "Genre: " + currentCharacter.genre + "\n\n" +
+
+        currentCharacter.story.parts.join("\n\n");
+
+    document.getElementById("name").value = "";
+
+    document.getElementById("age").value = "";
+
+    document.getElementById("hairstyle").value = "";
+
+    document.getElementById("clothes").value = "";
+
+    document.getElementById("features").value = "";
+
+    document.getElementById("description").value = "";
+
+    window.scrollTo(0, 0);
+
+}
+
+function showEditor() {
+
+    document.getElementById("storyBox").classList.add("hidden");
+
+    document.getElementById("editor").classList.remove("hidden");
+
+    window.scrollTo(0, 0);
+
+}
+
+function saveCharacter() {
+
+    const name = document.getElementById("name").value.trim();
+
+    const age = document.getElementById("age").value;
+
+    if (!name || !age || age < 1 || age > 120) {
+
+        alert("Bitte gib einen gültigen Namen und ein gültiges Alter ein.");
+
+        return;
+
+    }
+
+    const character = {
+
+        ...currentCharacter,
+
+        name,
+
+        age,
+
+        gender: document.getElementById("gender").value,
+
+        hair: document.getElementById("hair").value,
+
+        eyes: document.getElementById("eyes").value,
+
+        hairstyle: document.getElementById("hairstyle").value,
+
+        clothes: document.getElementById("clothes").value,
+
+        features: document.getElementById("features").value,
+
+        description: document.getElementById("description").value
+
+    };
+
+    const all = savedCharacters();
+
+    all.push(character);
+
+    localStorage.setItem("characterStories", JSON.stringify(all));
+
+    document.getElementById("editor").classList.add("hidden");
+
+    document.getElementById("finished").classList.remove("hidden");
+
+    document.getElementById("finishedContent").innerHTML = "";
+
+    const details = document.createElement("div");
+
+    details.className = "character";
+
+    const fields = [
+
+        ["Name", character.name],
+
+        ["Alter", character.age],
+
+        ["Geschlecht", character.gender],
+
+        ["Genre", character.genre],
+
+        ["Haarfarbe", character.hair],
+
+        ["Augenfarbe", character.eyes],
+
+        ["Frisur", character.hairstyle],
+
+        ["Kleidung", character.clothes],
+
+        ["Besondere Merkmale", character.features],
+
+        ["Beschreibung", character.description]
+
+    ];
+
+    const heading = document.createElement("h3");
+
+    heading.textContent = character.name;
+
+    details.appendChild(heading);
+
+    fields.forEach(([label, value]) => {
+
+        const p = document.createElement("p");
+
+        p.textContent = label + ": " + (value || "Keine Angabe");
+
+        details.appendChild(p);
+
+    });
+
+    document.getElementById("finishedContent").appendChild(details);
+
+    window.scrollTo(0, 0);
+
+}
+
+function showPage(page) {
+
+    document.getElementById("home").classList.toggle("hidden", page !== "home");
+
+    document.getElementById("collection").classList.toggle("hidden", page !== "collection");
+
+    if (page === "collection") {
+
+        renderCollection();
+
+    }
+
+    window.scrollTo(0, 0);
+
+}
+
+function renderCollection() {
+
+    const list = document.getElementById("characterList");
+
+    const all = savedCharacters();
+
+    list.innerHTML = "";
+
+    document.getElementById("count").textContent =
+
+        all.length + (all.length === 1 ? " Charakter" : " Charaktere");
+
+    if (all.length === 0) {
+
+        list.textContent = "Du hast noch keine Charaktere erstellt.";
+
+        return;
+
+    }
+
+    all.forEach(character => {
+
+        const box = document.createElement("div");
+
+        box.className = "character";
+
+        const title = document.createElement("h3");
+
+        title.textContent = character.name;
+
+        const info = document.createElement("p");
+
+        info.textContent =
+
+            character.genre + " · " + character.age + " Jahre · " + character.date;
+
+        const button = document.createElement("button");
+
+        button.textContent = "Geschichte ansehen";
+
+        button.onclick = () => viewCharacter(character.id);
+
+        box.append(title, info, button);
+
+        list.appendChild(box);
+
+    });
+
+}
+
+function viewCharacter(id) {
+
+    const character = savedCharacters().find(c => c.id === id);
+
+    if (!character) return;
+
+    const box = document.getElementById("characterList");
+
+    box.innerHTML = "";
+
+    const back = document.createElement("button");
+
+    back.textContent = "Zurück zur Sammlung";
+
+    back.className = "secondary";
+
+    back.onclick = renderCollection;
+
+    const details = document.createElement("div");
+
+    details.className = "character";
+
+    const title = document.createElement("h2");
+
+    title.textContent = character.name;
+
+    details.appendChild(title);
+
+    const values = [
+
+        ["Alter", character.age],
+
+        ["Geschlecht", character.gender],
+
+        ["Genre", character.genre],
+
+        ["Haarfarbe", character.hair],
+
+        ["Augenfarbe", character.eyes],
+
+        ["Frisur", character.hairstyle],
+
+        ["Kleidung", character.clothes],
+
+        ["Besondere Merkmale", character.features],
+
+        ["Beschreibung", character.description]
+
+    ];
+
+    values.forEach(([label, value]) => {
+
+        const p = document.createElement("p");
+
+        p.textContent = label + ": " + (value || "Keine Angabe");
+
+        details.appendChild(p);
+
+    });
+
+    const storyTitle = document.createElement("h3");
+
+    storyTitle.textContent = character.story.title;
+
+    details.appendChild(storyTitle);
+
+    const storyText = document.createElement("p");
+
+    storyText.textContent = character.story.parts.join("\n\n");
+
+    storyText.style.whiteSpace = "pre-line";
+
+    details.appendChild(storyText);
+
+    box.append(back, details);
+
+}
+
+function exportCharacters() {
+
+    const data = JSON.stringify(savedCharacters(), null, 2);
+
+    const file = new Blob([data], {type: "application/json"});
+
+    const url = URL.createObjectURL(file);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+
+    link.download = "character-stories-sammlung.json";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+function importCharacters(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+
+        try {
+
+            const imported = JSON.parse(reader.result);
+
+            if (!Array.isArray(imported) ||
+
+                !imported.every(c =>
+
+                    c && typeof c.id === "number" &&
+
+                    typeof c.name === "string" &&
+
+                    c.story && Array.isArray(c.story.parts)
+
+                )) {
+
+                throw new Error("Ungültige Datei");
+
+            }
+
+            const existing = savedCharacters();
+
+            const ids = new Set(existing.map(c => c.id));
+
+            imported.forEach(c => {
+
+                if (!ids.has(c.id)) {
+
+                    existing.push(c);
+
+                    ids.add(c.id);
+
+                }
+
+            });
+
+            localStorage.setItem("characterStories", JSON.stringify(existing));
+
+            alert("Sammlung erfolgreich importiert!");
+
+            renderCollection();
+
+        } catch (error) {
+
+            alert("Diese Datei konnte nicht importiert werden.");
+
+        }
+
+        event.target.value = "";
+
+    };
+
+    reader.readAsText(file);
+
+}
+
+</script>
+
 </body>
 </html>
